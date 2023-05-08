@@ -8,7 +8,7 @@
 	<meta charset="UTF-8">
 	<?php include 'includes/scripts.php'; ?>
 	<title>Lista de usuarios</title>
-    <style>
+    <!-- <style>
         #container h1 {
 	    font-size: 35px;
 	    display: inline-block;
@@ -52,7 +52,7 @@
     .link_delete {
         color: #f26b6b;
     }
-    </style>
+    </style> -->
 </head>
 <body>
 	<?php include 'includes/header.php' ?>
@@ -64,6 +64,7 @@
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Correo</th>
+                <th>Usuario</th>
                 <th>Rol</th>
                 <th>Acciones</th>
             </tr>
@@ -80,9 +81,10 @@
                             <td><?php echo $data["idusuario"]; ?></td>
                             <td><?php echo $data["nombre"]; ?></td>
                             <td><?php echo $data["correo"]; ?></td>
+                            <td><?php echo $data["usuario"]; ?></td>
                             <td><?php echo $data["rol"]; ?></td>
                             <td>
-                                <a class="link_edit" href="">Editar</a>
+                                <a class="link_edit" href="editar_usuario.php?id=<?php echo $data["idusuario"]; ?>">Editar</a>
                                 |
                                 <a class="link_delete" href="">Eliminar</a>
                             </td>
