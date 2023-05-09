@@ -8,51 +8,6 @@
 	<meta charset="UTF-8">
 	<?php include 'includes/scripts.php'; ?>
 	<title>Lista de usuarios</title>
-    <!-- <style>
-        #container h1 {
-	    font-size: 35px;
-	    display: inline-block;
-    }
-
-    .btn_new {
-	    display: inline-block;
-	    background: #239baa;
-	    color: #fff;
-	    padding: 5px 25px;
-	    border-radius: 4px;
-	    margin: 20px;
-    }
-
-    table {
-        border-collapse: collapse;
-        font-size: 12pt;
-        font-family: Arial;
-        width: 100%;
-    }
-
-    table th {
-        text-align: left;
-        padding: 10px;
-        background: #3d7ba8;
-        color: #fff;
-    }
-
-    table tr:nth-child(odd) {
-	    background-color: #fff;
-    }
-
-    table td {
-        padding: 10px;
-    }
-
-    .link_edit {
-        color: #0ca4ce;
-    }
-
-    .link_delete {
-        color: #f26b6b;
-    }
-    </style> -->
 </head>
 <body>
 	<?php include 'includes/header.php' ?>
@@ -70,7 +25,23 @@
             </tr>
 
             <?php 
-                $query = mysqli_query($connection, "SELECT u.idusuario, u.nombre, u.correo, u.usuario, r.rol FROM usuario u INNER JOIN rol r WHERE u.rol = r.idrol");
+                // Paginador
+                $sql_register = mysqli_query($connection, "SELECT COUNT(*) AS total_registros FROM usuario WHERE estatus = 1");
+                $result_register = mysqli_fetch_array($sql_register);
+                $total_registros = $result_register['total_registros'];
+
+                $por_pagina = 5;
+
+                if (empty($_GET['pagina'])) {
+                    $pagina = 1;
+                } else {
+                    $pagina = $_GET['pagina'];
+                }
+
+                $desde = ($pagina - 1) * $por_pagina;
+                $total_paginas  = ceil($total_registros / $por_pagina);
+
+                $query = mysqli_query($connection, "SELECT u.idusuario, u.nombre, u.correo, u.usuario, r.rol FROM usuario u INNER JOIN rol r ON u.rol = r.idrol WHERE estatus = 1 ORDER BY u.idusuario ASC LIMIT $desde, $por_pagina");
 
                 $result = mysqli_num_rows($query);
 
@@ -85,8 +56,10 @@
                             <td><?php echo $data["rol"]; ?></td>
                             <td>
                                 <a class="link_edit" href="editar_usuario.php?id=<?php echo $data["idusuario"]; ?>">Editar</a>
-                                |
-                                <a class="link_delete" href="">Eliminar</a>
+                                <?php if ($data["idusuario"] != 1) { ?>
+                                    |
+                                    <a class="link_delete" href="eliminar_confirmar_usuario.php?id=<?php echo $data["idusuario"]; ?>">Eliminar</a>
+                                <?php } ?>
                             </td>
                         </tr>
                         <?php
@@ -96,6 +69,29 @@
 
 
         </table>
+
+        <section class="paginador">
+            <ul>
+                <?php if ($pagina != 1) { ?>
+                        <li><a href="?pagina=<?php echo 1; ?>">|<</a></li>
+                        <li><a href="?pagina=<?php echo $pagina - 1; ?>"><<</a></li>
+                        <?php
+                    }
+
+                    for ($i = 1; $i <= $total_paginas; $i++) {
+                        if ($i == $pagina) {
+                            echo '<li class="pagina_seleccionada">'.$i.'</li>';
+                        } else {
+                            echo '<li><a href="?pagina='.$i.'">'.$i.'</a></li>';
+                        }
+                    }
+
+                    if ($pagina != $total_paginas) { ?>
+                        <li><a href="?pagina=<?php echo $pagina + 1; ?>">>></a></li>
+                        <li><a href="?pagina=<?php echo $total_paginas; ?>">>|</a></li>
+                <?php } ?>
+            </ul>
+        </section>
 	</section>
 
 	<?php include 'includes/footer.php' ?>

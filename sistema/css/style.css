@@ -202,6 +202,10 @@ input, select {
 	border-radius: 5px;
 }
 
+.notItemOne option:first-child {
+	display: none;
+}
+
 .btn_save {
 	font-size: 12pt;
 	background: #12a4c6;
@@ -276,4 +280,73 @@ table td {
 
 .link_delete {
 	color: #f26b6b;
+}
+
+/******************** Eliminar usuarios ***********************/
+.data_delete {
+	text-align: center;
+}
+
+.data_delete h2 {
+	font-size: 12pt;
+}
+
+.data_delete span {
+	font-weight: bold;
+	color: #4f72d4;
+	font-size: 12pt;
+}
+
+.btn_cancelar, .btn_aceptar {
+	display: inline-block;
+	width: 125px;
+	background-color: #478ba2;
+	color: #fff;
+	padding: 5px;
+	border-radius: 5px;
+	cursor: pointer;
+	margin: 15px;
+}
+
+.btn_cancelar {
+	background-color: #42b343;
+}
+
+.data_delete form {
+	background-color: initial;
+	margin: auto;
+	padding: 20px 50px;
+	border: 0;
+}
+
+/******************** Paginador ***********************/
+
+.paginador ul {
+	padding: 15px;
+	list-style: none;
+	background-color: #fff;
+	margin-top: 15px;
+	display: flex;
+	justify-content: center;
+}
+
+.paginador a, .pagina_seleccionada {
+	display: inline-block;
+	text-align: center;
+	color: #428bca;
+	border: 1px solid #ddd;
+	padding: 5px;
+	font-size: 14px;
+	width: 35px;
+}
+
+.paginador a:hover {
+	background-color: #ddd;
+}
+
+.pagina_seleccionada {
+	background-color: #428bca;
+	color: #FFF;
+	border: 1px solid #428bca;
+	font-family: Arial, Helvetica, sans-serif;
 }
