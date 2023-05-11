@@ -14,7 +14,6 @@ $db = 'facturacion';
 
 $connection = @mysqli_connect($host, $user, $password, $db);
 
-if (!$connection)
-{
+if (!$connection) {
     echo "Error en la conexión con MySQL.";
 }
